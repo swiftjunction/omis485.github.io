@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Future Value Calculator</title>
+    <link rel="stylesheet" href="future_value.css">
+    <script src="future_value.js"></script> 
+    
+      <script>
+      "use strict";
+      var $ = function(id)  {
+      	   return document.getElementById(id);
+     
+      };
+//
+//   Process Entries Procedure
+     var processEntries = function()  {   
+     	var rate = "";
+     	var investment = "";
+     	var years = "";   	
+     	 investment = parseInt(document.getElementById("investment").value);
+         rate = parseInt(document.getElementById("rate").value);
+         years = parseInt(document.getElementById("years").value);
+     	  
+      	  
+//   Error Messages
+     	var errorMessage = "";
+    
+      	  if (rate == "") {
+        	errorMessage = "Rate is required";
+        	alert(errorMessage);
+        	$("rate").focus();
+        	
+        }
+     
+        else if (rate <= 0) {
+        	errorMessage = "Rate must be > 0";
+        	alert(errorMessage);
+        	$("rate").focus();
+        }
+        
+        
+        else if(rate >= 15) {
+        	errorMessage = "Rate must be < 15";
+        	alert(errorMessage);
+        	$("rate").focus();
+        }
+           
+  
+      
+       else	if (investment == "") {
+        	errorMessage = "Investment entry is required";
+        	alert(errorMessage);
+        	$("investment").focus();
+        }
+        else if (investment < 0) {
+        	errorMessage = "Investment must be > 0";
+        	alert(errorMessage);
+        	$("investment").focus();
+        }
+        else if (investment >= 100000) {
+        	errorMessage = "Investment must be < or = 10000";
+        	alert(errorMessage);
+        	$("investment").focus();
+        }
+        
+
+        else if (years == "") {
+        	errorMessage = "Year entry is required";
+        	alert(errorMessage);
+        	$("years").focus();
+           }
+           
+        else if (years <= 0) {
+        	errorMessage = "Year must be > 0";
+        	alert(errorMessage);
+        	$("years").focus();
+           }
+        
+        else if (years > 50) {
+        	errorMessage = "Year must be less than 50";
+        	alert(errorMessage);
+        	$("years").focus();
+           }
+        
+   
+       else {
+        	calculatedFV(investment,rate,years);	
+		    $("calc").value = calculatedFV(investment,rate,years);   
+        }                                       
+ 
+};
+		 
+     
+ 
+//    Future Value Procedure
+      var calculatedFV = function(investment,rate,years)  {
+		var futureValue;
+		var yearlyValue = 0.0;
+
+		   futureValue = investment;
+		   for (var i = 1; i <= years; i++ ) {
+		   	
+		   	yearlyValue = futureValue * rate;
+		    yearlyValue = yearlyValue/100 ;
+		    yearlyValue = yearlyValue.toFixed(2);
+		  	   	
+			futureValue = futureValue + (futureValue * rate / 100);
+			futureValue = parseInt(futureValue);		
+          }
+   return futureValue;
+};
+  
+            window.onload = function() {
+         	$("calculate").onclick = processEntries;
+         	$("calc").focus();
+         };	
+               
+    </script>
+    
+</head>
+
+<body>
+
+
+       <main>  	
+         <h1>Future Value Calculator</h1>
+        
+        <label for="investment">Total Investment:</label>
+        <input type="text" id="investment"><br>
+        
+        <label for="rate">Annual Interest Rate:</label>
+        <input type="text" id="rate"><br>
+        
+        <label for="years">Number of Years:</label>
+        <input type="text" id="years"><br>
+              
+        <label for="future_value">Future Value:</label>
+        <input type="text" id="calc" disabled><br>
+        
+        <label>&nbsp;</label>
+        <input type="button" id="calculate" value="calculate"><br>  
+   
+          
+    </main>
+
+</body>
+</html>
